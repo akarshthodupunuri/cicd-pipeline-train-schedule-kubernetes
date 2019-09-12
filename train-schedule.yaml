@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: train-schedule
+  name: train-schedule-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: train-schedule
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: train-schedule
+    spec:
+      containers:
+      - image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
+        name: train-schedule
+        resources: {}
+        ports:
+        - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: train-schedule
+  name: train-schedule-service
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+    nodePort: 30088
+  selector:
+    app: train-schedule
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
