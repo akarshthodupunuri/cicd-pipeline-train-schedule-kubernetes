@@ -1,7 +1,6 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     app: train-schedule
   name: train-schedule-deployment
@@ -10,17 +9,14 @@ spec:
   selector:
     matchLabels:
       app: train-schedule
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: train-schedule
     spec:
       containers:
       - image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
         name: train-schedule
-        resources: {}
         ports:
         - containerPort: 8080
 
@@ -29,7 +25,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     app: train-schedule
   name: train-schedule-service
@@ -44,5 +39,3 @@ spec:
     app: train-schedule
   sessionAffinity: None
   type: NodePort
-status:
-  loadBalancer: {}
