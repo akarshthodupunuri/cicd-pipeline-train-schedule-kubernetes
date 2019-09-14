@@ -28,6 +28,8 @@ metadata:
   labels:
     app: train-schedule
   name: train-schedule-service
+  annotations: 
+        prometheus.io/scrape: 'true'
 spec:
   externalTrafficPolicy: Cluster
   ports:
